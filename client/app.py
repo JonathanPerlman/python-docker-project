@@ -1,14 +1,15 @@
 import urllib.request
-import time
+import ssl
 
-url = "http://my-server:8000"
+url = "https://my-server:8000"
+print("Client is starting (Secure Mode)...")
 
-print("Client is starting...")
+context = ssl._create_unverified_context()
 
 try:
-    with urllib.request.urlopen(url) as response:
+    with urllib.request.urlopen(url, context=context) as response:
         body = response.read().decode('utf-8')
-        print(f"Log from Server: {body}")
+        print(f"Log from Secure Server: {body}")
         print(f"Status Code: {response.getcode()}")
 except Exception as e:
-    print(f"Error: Could not connect to server. {e}")   
+    print(f"Error: Could not connect to SECURE server. {e}")
