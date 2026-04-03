@@ -1,22 +1,118 @@
-🐳 Python Docker Communication ProjectThis project demonstrates a professional DevOps workflow for containerized applications. It features a Client-Server architecture running in isolated environments using Docker.📋 Table of ContentsPrerequisitesNetwork SetupBuilding ImagesRunning ContainersCleanup & Optimization🛠 PrerequisitesDocker Desktop installed and running.Basic understanding of Python and Terminal.1. Network SetupIn Docker, containers are isolated by default. To allow them to communicate, we create a virtual bridge network.# Create a dedicated network for our services
-docker network create my-devops-network
-2. Building ImagesWe turn our source code into immutable Images. This ensures the "It works on my machine" problem is solved.# Build the Server Image
-docker build -t my-server-image ./server
+    # 🐳 Python Docker Project
 
-# Build the Client Image
+This project demonstrates communication between two Python-based services (**Client** and **Server**) running inside Docker containers using a custom network.
+
+---
+
+## 📌 Project Overview
+
+* Two services:
+
+  * **Server** – exposes an API on port `8000`
+  * **Client** – communicates with the server using its container name
+* Uses a custom Docker bridge network for internal communication
+
+---
+
+## ⚙️ Prerequisites
+
+Make sure you have installed:
+
+* Docker
+* Python (optional, for local testing)
+
+---
+
+## 🌐 Create Docker Network
+
+To allow containers to communicate using their service names, create a bridge network:
+
+```bash
+docker network create my-devops-network
+```
+
+---
+
+## 🏗️ Build Docker Images
+
+### Build Server Image
+
+```bash
+docker build -t my-server-image ./server
+```
+
+### Build Client Image
+
+```bash
 docker build -t my-client-image ./client
-3. Running ContainersNow we instantiate our images into running Containers.Step A: Start the Server (Background)The server needs to run in "Detached" mode (-d) so it can listen for requests without blocking the terminal.docker run -d \
+```
+
+---
+
+## ▶️ Run Containers
+
+### Run Server (Expose port 8000)
+
+```bash
+docker run -d \
   --name my-server \
   --network my-devops-network \
   -p 8000:8000 \
   my-server-image
-Step B: Start the Client (Interactive)The client runs in the foreground to show us the logs and the connection result.docker run \
+```
+
+### Run Client
+
+```bash
+docker run \
   --name my-client \
   --network my-devops-network \
   my-client-image
-🧹 Cleanup & OptimizationAs per Cost Optimization best practices, we must ensure no unused resources are left running.# Stop and remove all project containers
-docker rm -f my-server my-client
+```
 
-# Remove the virtual network
-docker network rm my-devops-network
-DevOps Tip: Always run the cleanup commands after your testing phase to save system RAM and CPU.Created by Yonatan - DevOps Journey 2024
+---
+
+## 🔗 How It Works
+
+* Both containers are connected to the same Docker network
+* The client communicates with the server using:
+
+  ```
+  http://my-server:8000
+  ```
+* Docker DNS resolves the container name automatically
+
+---
+
+## 📁 Project Structure
+
+```
+.
+├── client/
+│   └── Dockerfile
+├── server/
+│   └── Dockerfile
+└── README.md
+```
+
+---
+
+## ✅ Notes
+
+* Make sure the server is running before starting the client
+* You can stop containers using:
+
+```bash
+docker stop my-server my-client
+```
+
+---
+
+## 🚀 Future Improvements (Optional)
+
+* Add Docker Compose
+* Add logging
+* Add health checks
+* Add tests
+
+---
