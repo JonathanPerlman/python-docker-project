@@ -1,4 +1,4 @@
-    # 🐳 Python Docker Project
+# 🐳 Python Docker Project
 
 This project demonstrates communication between two Python-based services (**Client** and **Server**) running inside Docker containers using a custom network.
 
@@ -84,6 +84,18 @@ docker run \
 
 ---
 
+## ✅ Expected Result
+
+* The client sends a request to the server
+* The server responds successfully
+* The expected HTTP response status is:
+
+```
+200 OK
+```
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -105,14 +117,5 @@ docker run \
 ```bash
 docker stop my-server my-client
 ```
-
----
-
-## 🚀 Future Improvements (Optional)
-
-* Add Docker Compose
-* Add logging
-* Add health checks
-* Add tests
 
 ---
