@@ -196,7 +196,6 @@ docker network rm my-devops-network
 ### ❗ Why Cleanup?
 
 * Avoid conflicts
-* Ensure fresh environment
 * Apply new code changes
 
 ---
