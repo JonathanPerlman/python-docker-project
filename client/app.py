@@ -2,14 +2,15 @@ import urllib.request
 import ssl
 
 url = "https://my-server:8000"
-print("Client is starting (Secure Mode)...")
+print("Client starting in Strict mTLS mode...")
 
-context = ssl._create_unverified_context()
+context = ssl.create_default_context()
+context.load_verify_locations(cafile="server.crt")
+context.load_cert_chain(certfile="client.crt", keyfile="client.key")
 
 try:
     with urllib.request.urlopen(url, context=context) as response:
-        body = response.read().decode('utf-8')
-        print(f"Log from Secure Server: {body}")
-        print(f"Status Code: {response.getcode()}")
+        print(f"Server Response: {response.read().decode('utf-8')}")
 except Exception as e:
-    print(f"Error: Could not connect to SECURE server. {e}")
+    print(f"Security Error: {e}")
+     
