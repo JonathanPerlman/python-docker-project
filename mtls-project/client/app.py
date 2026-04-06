@@ -1,7 +1,7 @@
 import urllib.request
 import ssl
 
-url = "https://my-server:8000"
+url = "https://server-mtls:8000"
 print("Client starting in Strict mTLS mode...")
 
 context = ssl.create_default_context()
