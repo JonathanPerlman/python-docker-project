@@ -1,0 +1,19 @@
+services:
+  server-mtls:
+    build: ./server
+    container_name: server-compose-mtls
+    networks:
+      - secure-network
+  client-mtls:
+    build: ./client
+    container_name: client-compose-mtls
+    networks:
+      - secure-network
+    depends_on:
+      - server-mtls  
+    command: >
+      sh -c "sleep 2 && python app.py"
+
+networks:
+  secure-network:
+    driver: bridge
