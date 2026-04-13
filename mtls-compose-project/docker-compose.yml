@@ -4,6 +4,9 @@ services:
     container_name: server-compose-mtls
     networks:
       - secure-network
+    ports:
+      - "8000:8000"
+      - "9000:9000"
   client-mtls:
     build: ./client
     container_name: client-compose-mtls
@@ -13,6 +16,26 @@ services:
       - server-mtls  
     command: >
       sh -c "sleep 2 && python app.py"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus-server
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - secure-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana-dashboard
+    ports:
+      - "3000:3000"  
+    networks:
+      - secure-network
+    depends_on:
+      - prometheus      
 
 networks:
   secure-network:
