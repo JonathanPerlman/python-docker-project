@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:8000"
       - "9000:9000"
-      
+
   client-mtls:
     build: ./client
     container_name: client-compose-mtls
@@ -25,6 +25,7 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
+      
     networks:
       - secure-network
 
